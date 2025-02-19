@@ -1,8 +1,8 @@
-|#
+#|
 
 Jhonier Mendez Bravo 202372226
 
-#|
+|#
 
 
 (define invert
