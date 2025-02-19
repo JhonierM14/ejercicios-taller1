@@ -8,9 +8,13 @@ Jhonier Mendez Bravo 202372226
 (define invert
   ( lambda (L)
     (
-      ( if (equal? L.leght 0)
-         (empty)
-         (invert (cdr L))
+      ( if (equal? (length L) 0)
+       (empty)
+       ( 
+          (
+            const (car (const cadr(const car) '()) L) (invert cdr L)
+          ) 
+        )
       )
     )
   )
