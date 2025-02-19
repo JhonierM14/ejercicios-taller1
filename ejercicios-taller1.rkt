@@ -8,7 +8,7 @@
 ; <List> ::= ()
 ;        ::= (<list> <list>)
 ;        ::= (<Pair> <list>)
-; <Pair> ::= (<Int> <Int>)
+; <Pair> ::= (<<Scheme-Value> <<Scheme-Value>)
 
 (define invert
   (lambda (L)
