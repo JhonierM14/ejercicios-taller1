@@ -5,7 +5,10 @@
 
 #lang eopl
 
-;; invert : Lista -> Lista
+; <List> ::= ()
+;        ::= (<list> <list>)
+;        ::= (<Pair> <list>)
+; <Pair> ::= (<Int> <Int>)
 
 (define invert
   (lambda (L)
