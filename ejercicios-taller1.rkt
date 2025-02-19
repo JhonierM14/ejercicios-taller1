@@ -1,25 +1,25 @@
-;#
-:Jhonier Mendez Bravo 202372226
-;David Santiago Guerrero Delgado 202324594
-;#
+;;-----------------------------------------
+;; Jhonier Mendez Bravo 202372226
+;; David Santiago Guerrero Delgado 202324594
+;;-----------------------------------------
 
 #lang eopl
 
-;invert : Lista -> Lista
-
-(define lista1 '((a 1) (a 2) (b 1) (b 2)))
-(define lista2 '((5 9) (10 91) (82 7) (a e) ("Hola" "Mundo")))
-(define lista3 '(("es" "racket") ("genial" "muy") (17 29) (81 o)))
+;; invert : Lista -> Lista
 
 (define invert
   (lambda (L)
     (cond
       [(null? L) empty]
       [else (cons (list (cdar L) (caar L)) (invert (cdr L)))]
-      ;[else (cons (cdr (car L)) (car(car L)))]
     )
   )
 )
+
+;; Pruebas 
+(invert '((a 1) (a 2) (b 1) (b 2)))
+(invert '((5 9) (10 91) (82 7) (a e) ("Hola" "Mundo")))
+(invert '(("es" "racket") ("genial" "muy") (17 29) (81 o)))
 
 (define down
   ( lambda (L)
