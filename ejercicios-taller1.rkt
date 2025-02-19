@@ -17,7 +17,7 @@
       [(list? (car L)) (invert (car L))
                  (invert (cdr L))
                  ]
-      [else (cons (list (cdar L) (caar L)) (invert (cdr L)))]
+      [else (cons (list (car(cdr(car L))) (car(car L))) (invert (cdr L)))]
     )
   )
 )
