@@ -11,6 +11,7 @@
   (lambda (L)
     (cond
       [(null? L) empty]
+      [(list? (car L)) (invert (car L))]
       [else (cons (list (cdar L) (caar L)) (invert (cdr L)))]
     )
   )
