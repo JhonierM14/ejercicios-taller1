@@ -30,11 +30,18 @@
 (invert '(("es" "racket") ("genial" "muy") (17 29) (81 o)))
 
 (define down
-  ( lambda (L)
-    ()
-
+  (lambda (L)
+    (cond
+    [(null? L) empty]
+    [else (cons (list (car L)) (down (cdr L)))]
+    )
   )
 )
+
+;; Pruebas
+(down ’(1 2 3))
+(down ’((una) (buena) (idea)))
+(down ’(un (objeto (mas)) complicado))
 
 (define list-set
   ( lambda (L n x)
