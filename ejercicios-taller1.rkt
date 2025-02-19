@@ -5,12 +5,12 @@
 
 #lang eopl
 
-; <List> ::= ()
-;        ::= (<list> <list>)
-;        ::= (<Pair> <list>)
-; <Pair> ::= ()
-         ::= (<Scheme-Value> <<Scheme-Value>)
-         ::= (<list> <list>)
+;; <List> ::= ()
+;;        ::= (<list> <list>)
+;;        ::= (<Pair> <list>)
+;; <Pair> ::= ()
+;;        ::= (<Scheme-Value> <<Scheme-Value>)
+;;        ::= (<list> <list>)
 
 (define invert
   (lambda (L)
@@ -39,9 +39,9 @@
 )
 
 ;; Pruebas
-(down ’(1 2 3))
-(down ’((una) (buena) (idea)))
-(down ’(un (objeto (mas)) complicado))
+(down '(1 2 3))
+(down '((una) (buena) (idea)))
+(down '(un (objeto (mas)) complicado))
 
 (define list-set
   ( lambda (L n x)
