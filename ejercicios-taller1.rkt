@@ -44,11 +44,19 @@
 (down '(un (objeto (mas)) complicado))
 
 (define list-set
-  ( lambda (L n x)
-    ()
-
+  (lambda (L n x)
+    (cond
+      [(> (+ n 1) (length L)) "Error: no se pudo reemplazar el valor x en la posicion n"]
+      [(null? L) empty]
+      [(= n 0) (cons x (cdr L))]
+      [else (cons (car L) (list-set (cdr L) (- n 1) x))]
+    )
   )
 )
+
+;; Pruebas
+(list-set '(a b c d) 2 '(1 2))
+(list-set '(a b c d) 3 '(1 5 10))
 
 (define filter-in
   ( lambda (P L)
