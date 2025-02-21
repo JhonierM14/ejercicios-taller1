@@ -16,9 +16,7 @@
   (lambda (L)
     (cond
       [(null? L) empty]
-      [(list? (car L)) (invert (car L))
-                 (invert (cdr L))
-                 ]
+      ;[(list? (car L)) (invert (car L))(invert (cdr L))]
       [else (cons (list (car(cdr(car L))) (car(car L))) (invert (cdr L)))]
     )
   )
@@ -122,11 +120,20 @@
 )
 
 (define filter-acum
-  ( lambda (a b F acum filter)
-    ()
-
+  (lambda (a b F acum filter)
+    (cond
+      [(> a b) acum]
+      [(filter a) (filter-acum (+ a 1) b F (F acum a) filter)]
+      [else (filter-acum (+ a 1) b F acum filter)]
+    )
   )
 )
+
+;; Pruebas 
+(filter-acum 1 10 + 0 odd?)
+(filter-acum 1 10 + 0 even?)
+(filter-acum 1 10 - 0 odd?)
+(filter-acum 1 10 - 0 even?)
 
 (define (operate lrators lrands)
   ( 
