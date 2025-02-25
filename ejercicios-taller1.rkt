@@ -136,6 +136,12 @@ helper :
         [(equal? E1 (car L)) (cons E2 (swapper E1 E2 (cdr L) ) )]]
 )))
 
+;; cartesian-product :
+;; Proposito:
+;; S x L -> P : Procedimiento que retorna el producto
+;; cartesiano de una lista S y una lista L haciendo uso
+;; de una funcion auxiliar
+;;
 ;; <list> ::= ()
 ;;        ::= (<Scheme-Value> <list>)
 
@@ -158,7 +164,11 @@ helper :
 (cartesian-product '(a b c) '(x y))
 (cartesian-product '(p q r) '(5 6 7))
 
-
+;; mapping :
+;; Proposito:
+;; S x L -> L’ : Procedimiento que aplica una operacion S
+;; a cada elemento  de L.
+;;
 ;; <list> ::= ()
 ;;        ::= (<Scheme-Value> <list>)
 
@@ -182,6 +192,11 @@ helper :
   )
 )
 
+;;<lista> := ()
+;;        := (<Schema-value> <lista>)
+;;
+
+
 (define up
   ( lambda (L)
     ()
@@ -189,17 +204,10 @@ helper :
   )
 )
 
-(define insert
-  ( lambda (L)
-    ()
-
-  )
-)
-
- zip :
+;; zip :
 ;; Proposito:
-;; S x L -> L’ : Procedimiento que aplica una operacion F a cada posicion i de lista L1 y una lista L2
-;; ocurrencia de un simbolo S en una lista de simbolos L.
+;; S x L x F -> L' : Procedimiento que aplica una operacion S
+;; a cada elemento de pocision i de una lista L y F
 ;;
 ;;<lista> := ()
 ;;            := (<int> <lista>)
@@ -210,6 +218,9 @@ helper :
        '() 
         (cons (F (car L1) (car L2)) (zip F (cdr L1) (cdr L2) ))
 )))
+
+;;<lista> := ()
+;;        := (<int> <lista>)
 
 (define filter-acum
   (lambda (a b F acum filter)
@@ -227,6 +238,11 @@ helper :
 (filter-acum 1 10 - 0 odd?)
 (filter-acum 1 10 - 0 even?)
 
+;; <operadores> := ()
+;; <operadores> := (<operador> <list>)
+;; <list> := ()
+;; <list> := (<int> <list>)
+
 (define (operate lrators lrands)
   ( 
 
@@ -235,11 +251,11 @@ helper :
 
 ;; path :
 ;; Proposito:
-;; S x L -> L’ : Procedimiento que retorna el camino a un elemento n de un arbol binario
-;; ocurrencia de un simbolo S en una lista de simbolos L.
+;; S x L -> L’ : Procedimiento que retorna el camino para llegar 
+;; a un elemento S de un arbol binario L
 ;;
 ;;<lista> := ()
-;;            := (<int> <lista>)
+;;        := (<int> <lista>)
 
 (define path 
    (lambda (n BTS)
@@ -250,6 +266,9 @@ helper :
        [(> n (car BTS) ) (cons 'right (path n (cdr BTS)))]
 )))
 
+;; <list> := ()
+;; <list> := (<int> <list>)
+;; <list> := (<list> <list>)
 
 (define (count-odd-and-even arbol)
   (
@@ -257,11 +276,23 @@ helper :
   )
 )
 
+;; <OperacionB>::= <int>
+;;             ::= (<OperacionB> 'suma <OperacionB>)
+;;             ::= (<OperacionB> 'resta <OperacionB>)
+;;             ::= (<OperacionB> 'multiplica <OperacionB>)
+
 (define (Operar-binarias operacionB) 
   (
 
   )
 )
+
+;; prod-scalar-matriz :
+;; Proposito: 
+;; S x L -> S' : Procedimiento que multiplica una matriz S 
+;; por un vector L
+;;<lista> := ()
+;;            := (<int> <lista>)
 
 
 (define aux
@@ -276,6 +307,9 @@ helper :
    '()
     (cons (aux (car mat) vec) (prod-scalar-matriz (cdr mat) (cdr vec)))
 )))
+
+;; (prod-scalar-matriz '((1 1) (2 2)) '(2 3))
+;; (prod-scalar-matriz '((1 1) (2 2) (3 3)) '(2 3))
 
 (define (pascal N) 
   (
