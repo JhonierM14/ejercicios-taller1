@@ -11,19 +11,18 @@
 
 
 (define invert
-  ( lambda (L)
-    (
-      ( if (equal? (length L) 0)
-       (empty)
-       ( 
-          (
-            const (car (const cadr(const car) '()) L) (invert cdr L)
-          ) 
-        )
-      )
-    )
-  )
-)
+  (lambda (L)
+    (if (null? L)
+        '()
+        (if (pair? (car L))
+            (cons (list car(cdr (car L)) (car(car L))) (invert(cdr L)) )
+            '()
+            ))))
+
+;; Pruebas 
+(invert '((a 1) (a 2) (b 1) (b 2)))
+(invert '((5 9) (10 91) (82 7) (a e) ("Hola" "Mundo")))
+(invert '(("es" "racket") ("genial" "muy") (17 29) (81 o)))
 
 (define down
   (lambda (L)
