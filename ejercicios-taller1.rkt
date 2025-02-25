@@ -32,7 +32,7 @@
 ;; dowm :
 ;; Proposito:
 ;; S x L -> L’ : Procedimiento que a cada elemento de una lista
-;; lo inserta a una lista y lo inserta nuevamente en la pocision
+;; lo inserta en una lista y lo ingresa nuevamente en la pocision
 ;; en la que estaba el elemento
 ;;  
 ;; <List> ::= ()
