@@ -147,7 +147,8 @@ helper :
     ( cond 
         [(null? L) '()]
         [(equal? E2 (car L)) (cons E1 (swapper E1 E2 (cdr L) ) )]
-        [(equal? E1 (car L)) (cons E2 (swapper E1 E2 (cdr L) ) )]]
+        [(equal? E1 (car L)) (cons E2 (swapper E1 E2 (cdr L) ) )]
+        [else (cons (car L) (swapper E1 E2 (cdr L)))]
 )))
 
 ;; Pruebas :
