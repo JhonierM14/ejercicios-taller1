@@ -363,14 +363,14 @@ helper :
   (lambda (fila vec)
     (if (null? fila) 
     '()
-     (cons (× (car fila) (car vec) ) (aux (cdr fila) (cdr vec) ))
+     (cons (* (car fila) (car vec) ) (aux (cdr fila) (cdr vec) ))
 )))
 
- (define prod-scalar-matriz mat vec
-   (if (null? vec)
+ (define (prod-scalar-matriz mat vec)
+   (if (null? mat)
    '()
-    (cons (aux (car mat) vec) (prod-scalar-matriz (cdr mat) (cdr vec)))
-)))
+    (cons (aux (car mat) vec) (prod-scalar-matriz (cdr mat) vec))
+))
 
 ;; Pruebas :
 (prod-scalar-matriz '((1 1) (2 2)) '(2 3))
