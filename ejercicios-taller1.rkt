@@ -149,12 +149,21 @@ helper :
 (cartesian-product '(p q r) '(5 6 7))
 
 
+;; <list> ::= ()
+;;        ::= (<Scheme-Value> <list>)
+
 (define mapping
   ( lambda (F L1 L2)
-    ()
+     ( if (null? L1)
+          '()
+          (if (= (F (car L1)) (car L2) )
+                 (cons (list (car L1) (car L2)) (mapping F (cdr L1) (cdr L2)))
+                 '()
+                 ))))
 
-  )
-)
+; (mapping (lambda (d) (* d 2)) (list 1 2 3) (list 2 4 6))
+; (mapping (lambda (d) (* d 3)) (list 1 2 2) (list 2 4 6))
+; (mapping (lambda (d) (* d 2)) (list 1 2 3) (list 3 9 12))
 
 (define inversions
   ( lambda (L)
