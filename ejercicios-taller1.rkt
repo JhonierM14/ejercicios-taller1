@@ -119,12 +119,22 @@ helper :
 
 ) 
 
-(define swapper
-  ( lambda (E1 E2 L)
-    ()
+;; swapper :
+;; Proposito:
+;; S x L -> L’ : Procedimiento que cambia cada caracter E1 por un caracter E2 de una lista y viceversa
+;; ocurrencia de un simbolo S en una lista de simbolos L.
+;;
+;;<lista> := ()
+;;            := (<char> <lista>)
+;;            := ((<char> <lista>) <lista>)
 
-  )
-)
+(define swapper 
+  (lambda (E1 E2 L)
+    ( cond 
+        [(null? L) '()]
+        [(equal? E2 (car L)) (cons E1 (swapper E1 E2 (cdr L) ) )]
+        [(equal? E1 (car L)) (cons E2 (swapper E1 E2 (cdr L) ) )]]
+)))
 
 ;; <list> ::= ()
 ;;        ::= (<Scheme-Value> <list>)
@@ -186,12 +196,20 @@ helper :
   )
 )
 
-(define zip
-  ( lambda (L)
-    ()
+ zip :
+;; Proposito:
+;; S x L -> L’ : Procedimiento que aplica una operacion F a cada posicion i de lista L1 y una lista L2
+;; ocurrencia de un simbolo S en una lista de simbolos L.
+;;
+;;<lista> := ()
+;;            := (<int> <lista>)
 
-  )
-)
+(define zip
+   (lambda (F L1 L2 )
+      (if (null? L1) 
+       '() 
+        (cons (F (car L1) (car L2)) (zip F (cdr L1) (cdr L2) ))
+)))
 
 (define filter-acum
   (lambda (a b F acum filter)
@@ -215,13 +233,22 @@ helper :
   )
 )
 
-(define path
-  ( lambda (n BST)
-    ()
+;; path :
+;; Proposito:
+;; S x L -> L’ : Procedimiento que retorna el camino a un elemento n de un arbol binario
+;; ocurrencia de un simbolo S en una lista de simbolos L.
+;;
+;;<lista> := ()
+;;            := (<int> <lista>)
 
-  )
-)
-
+(define path 
+   (lambda (n BTS)
+      (cond
+       [(null? BTS) '()]
+       [(= n (car BTS)) '()]
+       [(< n (car BTS) ) (cons 'left (path n (cdr BTS)))]
+       [(> n (car BTS) ) (cons 'right (path n (cdr BTS)))]
+)))
 
 
 (define (count-odd-and-even arbol)
@@ -230,18 +257,25 @@ helper :
   )
 )
 
-(define (prod-scalar-matriz mat vec)
-  (
-
-  )
-)
-
-
 (define (Operar-binarias operacionB) 
   (
 
   )
 )
+
+
+(define aux
+  (lambda (fila vec)
+    (if (null? fila) 
+    '()
+     (cons (× (car fila) (car vec) ) (aux (cdr fila) (cdr vec) ))
+)))
+
+ (define prod-scalar-matriz mat vec
+   (if (null? vec)
+   '()
+    (cons (aux (car mat) vec) (prod-scalar-matriz (cdr mat) (cdr vec)))
+)))
 
 (define (pascal N) 
   (
