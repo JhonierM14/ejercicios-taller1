@@ -4,6 +4,11 @@
 ;; Juan Pablo Robayo Maestre 202156743
 ;;-----------------------------------------
 
+;; invert :
+;; Proposito:
+;; S x L -> L’ : Procedimiento que intercambia la pocision
+;; de los elementos dentro de un tupla
+;;  
 ;; <List> ::= ()
 ;;        ::= (<Pair> <list>)
 ;; <Pair> ::= ()
@@ -24,6 +29,15 @@
 (invert '((5 9) (10 91) (82 7) (a e) ("Hola" "Mundo")))
 (invert '(("es" "racket") ("genial" "muy") (17 29) (81 o)))
 
+;; dowm :
+;; Proposito:
+;; S x L -> L’ : Procedimiento que a cada elemento de una lista
+;; lo inserta a una lista y lo inserta nuevamente en la pocision
+;; en la que estaba el elemento
+;;  
+;; <List> ::= ()
+;;        ::= (<Scheme-Value> <list>)
+
 (define down
   (lambda (L)
     (cond
@@ -37,6 +51,15 @@
 (down '(1 2 3))
 (down '((una) (buena) (idea)))
 (down '(un (objeto (mas)) complicado))
+
+
+;; list-set :
+;; Proposito:
+;; S x L -> L’ : Procedimiento que inserta en la pocision n
+;; de una lista un elemento x
+;;  
+;; <List> ::= ()
+;;        ::= (<Scheme-Value> <list>)
 
 (define list-set
   (lambda (L n x)
@@ -103,12 +126,28 @@ helper :
   )
 )
 
+;; <list> ::= ()
+;;        ::= (<Scheme-Value> <list>)
+
+(define aux
+  (lambda (E L2)
+    (if (null? L2)
+        '()
+        (cons (list E (car L2)) (aux E (cdr L2)))
+        )))
+
 (define cartesian-product
   ( lambda (L1 L2)
-    ()
+    (if (null? L1)
+        '()
+        (if (null? L2)
+            '()
+            ( cons (aux (car L1) L2) (cartesian-product (cdr L1) L2) )
+     ))))
 
-  )
-)
+(cartesian-product '(a b c) '(x y))
+(cartesian-product '(p q r) '(5 6 7))
+
 
 (define mapping
   ( lambda (F L1 L2)
