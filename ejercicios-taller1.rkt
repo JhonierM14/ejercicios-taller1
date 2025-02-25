@@ -137,7 +137,6 @@ helper :
 ;; Proposito:
 ;; S x L -> L’ : Procedimiento que cambia cada caracter 
 ;; E1 por un caracter E2 de una lista y viceversa
-;; ocurrencia de un simbolo S en una lista de simbolos L.
 ;;
 ;;<lista> := ()
 ;;            := (<char> <lista>)
