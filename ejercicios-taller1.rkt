@@ -75,12 +75,26 @@
 ;; Pruebas
 (list-set '(a b c d) 2 '(1 2))
 (list-set '(a b c d) 3 '(1 5 10))
+
+;; filter-in :
+;; Proposito:
+;; S x L -> L’ : Procedimiento que 
+;;
+;;  
+;; <List> ::= ()
+;;        ::= (<Scheme-Value> <list>)
+
 (define filter-in
   ( lambda (P L)
     ()
 
   )
 )
+
+;; Pruebas :
+(filter-in number? '(a 2 (1 3) b 7))
+(filter-in symbol? '(a (b c) 17 foo))
+(filter-in string? '(a b u "univalle" "racket" "flp" 28 90 (1 2 3)))
 
 #|
 list-index :
@@ -91,10 +105,6 @@ Si ningún elemento satisface P, retorna #f.
         ::= (<valor> <lista>)
 <predicado> ::= procedimiento que devuelve #t o #f para un <valor>
 <indice> ::= número natural que representa la posición en la lista
-Ejemplo:
-(list-index even? '(1 3 5 6 7))  => 3
-(list-index even? '(1 3 5 7 9))  => #f
-
 
 helper :
  Proposito:
@@ -119,6 +129,10 @@ helper :
 
 ) 
 
+;; Pruebas :
+(list-index even? '(1 3 5 6 7))  => 3
+(list-index even? '(1 3 5 7 9))  => #f
+
 ;; swapper :
 ;; Proposito:
 ;; S x L -> L’ : Procedimiento que cambia cada caracter E1 por un caracter E2 de una lista y viceversa
@@ -135,6 +149,11 @@ helper :
         [(equal? E2 (car L)) (cons E1 (swapper E1 E2 (cdr L) ) )]
         [(equal? E1 (car L)) (cons E2 (swapper E1 E2 (cdr L) ) )]]
 )))
+
+;; Pruebas :
+(swapper 'a 'd '(a b c d))
+(swapper 'a 'd '(a d () c d))
+(swapper 'x 'y '(y y x y x y x x y))
 
 ;; cartesian-product :
 ;; Proposito:
@@ -161,6 +180,7 @@ helper :
             ( cons (aux (car L1) L2) (cartesian-product (cdr L1) L2) )
      ))))
 
+;; Pruebas
 (cartesian-product '(a b c) '(x y))
 (cartesian-product '(p q r) '(5 6 7))
 
@@ -181,9 +201,18 @@ helper :
                  '()
                  ))))
 
-; (mapping (lambda (d) (* d 2)) (list 1 2 3) (list 2 4 6))
-; (mapping (lambda (d) (* d 3)) (list 1 2 2) (list 2 4 6))
-; (mapping (lambda (d) (* d 2)) (list 1 2 3) (list 3 9 12))
+;; Pruebas :
+(mapping (lambda (d) (* d 2)) (list 1 2 3) (list 2 4 6))
+(mapping (lambda (d) (* d 3)) (list 1 2 2) (list 2 4 6))
+(mapping (lambda (d) (* d 2)) (list 1 2 3) (list 3 9 12))
+
+;; inversions :
+;; Proposito:
+;; S x L -> L’ : Procedimiento que 
+;;
+;;
+;; <list> ::= ()
+;;        ::= (<Scheme-Value> <list>)
 
 (define inversions
   ( lambda (L)
@@ -192,10 +221,15 @@ helper :
   )
 )
 
-;;<lista> := ()
-;;        := (<Schema-value> <lista>)
-;;
+;; Pruebas :
 
+;; up :
+;; Proposito:
+;; S x L -> L’ : Procedimiento que 
+;;
+;;
+;; <list> ::= ()
+;;        ::= (<Scheme-Value> <list>)
 
 (define up
   ( lambda (L)
@@ -203,6 +237,8 @@ helper :
 
   )
 )
+
+;; Pruebas :
 
 ;; zip :
 ;; Proposito:
@@ -219,6 +255,13 @@ helper :
         (cons (F (car L1) (car L2)) (zip F (cdr L1) (cdr L2) ))
 )))
 
+;; Pruebas :
+
+;; filter-acum :
+;; Proposito:
+;; S x L -> L’ : Procedimiento que 
+;;
+;;
 ;;<lista> := ()
 ;;        := (<int> <lista>)
 
@@ -238,6 +281,10 @@ helper :
 (filter-acum 1 10 - 0 odd?)
 (filter-acum 1 10 - 0 even?)
 
+;; operate :
+;; Proposito:
+;; S x L -> L’ : Procedimiento que 
+;;
 ;; <operadores> := ()
 ;; <operadores> := (<operador> <list>)
 ;; <list> := ()
@@ -248,6 +295,8 @@ helper :
 
   )
 )
+
+;; Pruebas :
 
 ;; path :
 ;; Proposito:
@@ -266,6 +315,9 @@ helper :
        [(> n (car BTS) ) (cons 'right (path n (cdr BTS)))]
 )))
 
+;; Pruebas :
+
+
 ;; <list> := ()
 ;; <list> := (<int> <list>)
 ;; <list> := (<list> <list>)
@@ -276,6 +328,10 @@ helper :
   )
 )
 
+;; Operar-binarias :
+;; Proposito:
+;; S x L -> L’ : Procedimiento que 
+;;
 ;; <OperacionB>::= <int>
 ;;             ::= (<OperacionB> 'suma <OperacionB>)
 ;;             ::= (<OperacionB> 'resta <OperacionB>)
@@ -287,13 +343,14 @@ helper :
   )
 )
 
+;; Pruebas
+
 ;; prod-scalar-matriz :
 ;; Proposito: 
 ;; S x L -> S' : Procedimiento que multiplica una matriz S 
 ;; por un vector L
 ;;<lista> := ()
-;;            := (<int> <lista>)
-
+;;        := (<int> <lista>)
 
 (define aux
   (lambda (fila vec)
@@ -308,11 +365,19 @@ helper :
     (cons (aux (car mat) vec) (prod-scalar-matriz (cdr mat) (cdr vec)))
 )))
 
-;; (prod-scalar-matriz '((1 1) (2 2)) '(2 3))
-;; (prod-scalar-matriz '((1 1) (2 2) (3 3)) '(2 3))
+;; Pruebas :
+(prod-scalar-matriz '((1 1) (2 2)) '(2 3))
+(prod-scalar-matriz '((1 1) (2 2) (3 3)) '(2 3))
+
+;; pascal :
+;; Proposito:
+;; S x L -> L’ : Procedimiento que 
+;;
 
 (define (pascal N) 
   (
 
   )
 )
+
+;; Pruebas :
