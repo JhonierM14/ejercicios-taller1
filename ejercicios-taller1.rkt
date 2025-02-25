@@ -257,6 +257,8 @@ helper :
 )))
 
 ;; Pruebas :
+(zip + '(1 4) '(6 2))
+(zip * '(11 5 6) '(10 9 8))
 
 ;; filter-acum :
 ;; Proposito:
