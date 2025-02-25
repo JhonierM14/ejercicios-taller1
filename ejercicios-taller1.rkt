@@ -20,7 +20,7 @@
     (if (null? L)
         '()
         (if (pair? (car L))
-            (cons (list car(cdr (car L)) (car(car L))) (invert(cdr L)) )
+            (cons (list (car(cdr (car L))) (car(car L))) (invert(cdr L)) )
             '()
             ))))
 
