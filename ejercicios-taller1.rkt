@@ -314,12 +314,16 @@ helper :
       (cond
        [(null? BTS) '()]
        [(= n (car BTS)) '()]
-       [(< n (car BTS) ) (cons 'left (path n (cdr BTS)))]
-       [(> n (car BTS) ) (cons 'right (path n (cdr BTS)))]
-)))
+       [(< n (car BTS) ) (cons 'left (path n (car (cdr BTS))))]
+       [(> n (car BTS) ) (cons 'right (path n (car (cdr (cdr BTS)))))]
+       )
+))
 
 ;; Pruebas :
-
+(path 17 '(14 (7 () (12 () ()))
+(26 (20 (17 () ())
+())
+(31 () ()))))
 
 ;; <list> := ()
 ;; <list> := (<int> <list>)
