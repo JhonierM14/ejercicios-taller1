@@ -223,6 +223,9 @@ helper :
 )
 
 ;; Pruebas :
+(inversions '(2 3 8 6 1))
+(inversions '(1 2 3 4))
+(inversions '(3 2 1))
 
 ;; up :
 ;; Proposito:
@@ -240,14 +243,16 @@ helper :
 )
 
 ;; Pruebas :
+(up '((1 2) (3 4)))
+(up '((x (y)) z))
 
 ;; zip :
 ;; Proposito:
 ;; S x L x F -> L' : Procedimiento que aplica una operacion S
 ;; a cada elemento de pocision i de una lista L y F
 ;;
-;;<lista> := ()
-;;            := (<int> <lista>)
+;; <lista> := ()
+;;         := (<int> <lista>)
 
 (define zip
    (lambda (F L1 L2 )
@@ -300,14 +305,16 @@ helper :
 )
 
 ;; Pruebas :
+(operate (list + * + - *) '(1 2 8 4 11 6))
+(operate (list *) '(4 5))
 
 ;; path :
 ;; Proposito:
 ;; S x L -> L’ : Procedimiento que retorna el camino para llegar 
 ;; a un elemento S de un arbol binario L
 ;;
-;;<lista> := ()
-;;        := (<int> <lista>)
+;; <arbol-binario> := (arbol-vacio) empty
+;;                 := (nodo) numero <arbol-binario> <arbol-binario>
 
 (define path 
    (lambda (n BTS)
@@ -325,6 +332,10 @@ helper :
 ())
 (31 () ()))))
 
+;; count-odd-and-even :
+;; Proposito:
+;; S x L -> L’ : Procedimiento que 
+;;
 ;; <list> := ()
 ;; <list> := (<int> <list>)
 ;; <list> := (<list> <list>)
@@ -334,6 +345,12 @@ helper :
 
   )
 )
+
+;; Pruebas :
+(count-odd-and-even '(14 (7 () (12 () ()))
+                      (26 (20 (17 () ())
+                            ())
+                        (31 () ()))))
 
 ;; Operar-binarias :
 ;; Proposito:
@@ -351,12 +368,20 @@ helper :
 )
 
 ;; Pruebas
+(Operar-binarias 4)
+(Operar-binarias '(2 suma 9) )
+(Operar-binarias '(2 resta 9) )
+(Operar-binarias '(2 multiplica 9) )
+(Operar-binarias '( (2 multiplica 3) suma (5 resta 1 ) ) )
+(Operar-binarias '( (2 multiplica (4 suma 1) )
+                      multiplica
+                  ( (2 multiplica 4) resta 1 ) ) )
 
 ;; prod-scalar-matriz :
 ;; Proposito: 
 ;; S x L -> S' : Procedimiento que multiplica una matriz S 
 ;; por un vector L
-;;<lista> := ()
+;; <lista> := ()
 ;;        := (<int> <lista>)
 
 (define aux
@@ -388,3 +413,5 @@ helper :
 )
 
 ;; Pruebas :
+(pascal 5)
+(pascal 1)
