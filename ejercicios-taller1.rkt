@@ -119,12 +119,48 @@ helper :
   )
 )
 
-(define up
-  ( lambda (L)
-    ()
+#|
+up :
+Propósito:
+L -> L' : Procedimiento que remueve un par de paréntesis a cada elemento del nivel más alto de la lista.
+Si un elemento de este nivel no es una lista, se mantiene sin modificaciones.
 
-  )
-)
+<lista> ::= ()
+        ::= (<valor> <lista>)
+        ::= ((<valor> <lista>) <lista>)
+
+Ejemplo:
+(up '((1 2) (3 4))) => '(1 2 3 4)
+(up '((x (y)) z)) => '(x (y) z)
+
+apend :
+Propósito:
+L1 x L2 -> L3 : Procedimiento que concatena dos listas sin usar la función append predefinida.
+
+<lista> ::= ()
+        ::= (<valor> <lista>)
+
+Ejemplo:
+(apend '(1 2 3) '(4 5 6)) => '(1 2 3 4 5 6)
+(apend '() '(a b c)) => '(a b c)
+(apend '(x y) '()) => '(x y)
+|#
+
+(define apend
+  (lambda (L1 L2)
+    (if (null? L1)
+      L2
+    (cons (car L1) (apend (cdr L1) L2)))))
+
+
+(define up
+  (lambda (L)
+    (cond
+      [(null? L) '()] 
+      [(list? (car L)) (apend (car L) (up (cdr L)))] 
+      [else (cons (car L) (up (cdr L)))]))) 
+
+
 
 (define insert
   ( lambda (L)
@@ -147,11 +183,25 @@ helper :
   )
 )
 
-(define (operate lrators lrands)
-  ( 
+#|
+operate :
+Propósito:
+L1 x L2 -> N : Procedimiento que aplica sucesivamente una lista de funciones binarias sobre una lista de números.
 
-  )
-)
+<lista-operadores> ::= ()
+                   ::= (<operador-binario> <lista-operadores>)
+<lista-operandos> ::= (<número> <lista-operandos>)
+
+Ejemplo:
+(operate (list + * + - *) '(1 2 8 4 11 6)) => 102
+(operate (list *) '(4 5)) => 20
+|#
+
+(define operate
+  (lambda (lrators lrands)
+    (if (null? lrators)
+        (car lrands)
+        (operate (cdr lrators) (cons ((car lrators) (car lrands) (cadr lrands)) (cddr lrands))))))
 
 (define path
   ( lambda (n BST)
@@ -175,14 +225,69 @@ helper :
 )
 
 
-(define (Operar-binarias operacionB) 
-  (
+#|
+Operar-binarias :
+Propósito:
+<OperacionB> -> <int> : Procedimiento que evalúa una expresión binaria representada como una lista anidada.
 
-  )
-)
+<OperacionB> ::= <int>
+              ::= (<OperacionB> 'suma <OperacionB>)
+              ::= (<OperacionB> 'resta <OperacionB>)
+              ::= (<OperacionB> 'multiplica <OperacionB>)
 
-(define (pascal N) 
-  (
+Ejemplo:
+(Operar-binarias 4) => 4
+(Operar-binarias '(2 suma 9)) => 11
+(Operar-binarias '(2 resta 9)) => -7
+(Operar-binarias '( (2 multiplica 3) suma (5 resta 1))) => 10
+|#
 
-  )
-)
+(define Operar-binarias
+  (lambda (exp)
+    (cond
+      [(number? exp) exp] 
+      [(list? exp) 
+       (cond
+         [(equal? (cadr exp) 'suma) (+ (Operar-binarias (car exp)) (Operar-binarias (caddr exp)))]
+         [(equal? (cadr exp) 'resta) (- (Operar-binarias (car exp)) (Operar-binarias (caddr exp)))]
+         [(equal? (cadr exp) 'multiplica) (* (Operar-binarias (car exp)) (Operar-binarias (caddr exp)))])])))
+
+
+#|
+pascal :
+Propósito:
+N -> L : Procedimiento que retorna la fila N del triángulo de Pascal.
+
+<N> ::= número natural
+<fila> ::= (<número> <fila>) | ()
+
+Ejemplo:
+(pascal 1) => '(1)
+(pascal 2) => '(1 1)
+(pascal 5) => '(1 4 6 4 1)
+
+
+generar-fila :
+Propósito:
+L -> L' : Procedimiento que recibe una fila del triángulo de Pascal y genera la siguiente fila.
+
+<fila> ::= (<número> <fila>) | ()
+
+Ejemplo:
+(generar-fila '(1 1)) => '(1 2 1)
+(generar-fila '(1 2 1)) => '(1 3 3 1)
+|#
+
+(define generar-fila
+  (lambda (fila)
+    (if (null? (cdr fila))
+        '(1)  
+        (cons (+ (car fila) (cadr fila)) (generar-fila (cdr fila))))))
+
+(define pascal
+  (lambda (n)
+    (if (= n 1)
+        '(1) 
+        (cons 1 (generar-fila (pascal (- n 1)))))))
+
+
