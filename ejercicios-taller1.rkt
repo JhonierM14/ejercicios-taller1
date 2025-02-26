@@ -226,11 +226,23 @@ helper :
 
 ;; inversions :
 ;; Proposito:
-;; S x L -> L’ : Procedimiento que 
+;; S x L -> L’ : Procedimiento que recibe una lista y cuenta la cantidad 
+;; de parejas (i, j) que cumplen que i > j
 ;;
+;; <list> ::= ()
+;;        ::= (<int> <list>)
+
+;; longitud :
+;; Proposito:
+;; L -> N : Procedimiento que cuenta la cantidad de elementos de una lista sin usar length
 ;;
 ;; <list> ::= ()
 ;;        ::= (<Scheme-Value> <list>)
+
+;; Ejemplos:
+;; (longitud '(1 2 4 5 6)) => 5
+;; (longitud '()) => 0
+;; (longitud '(1 11 9)) => 3
 
 (define longitud
   (lambda (L x)
@@ -323,15 +335,15 @@ Ejemplo:
 (zip + '(1 4) '(6 2))
 (zip * '(11 5 6) '(10 9 8))
 
+;;--------------------------------Punto 12--------------------------------
+
 ;; filter-acum :
 ;; Proposito:
-;; S x L -> L’ : Procedimiento que 
-;;
+;; S x L -> L’ : Procedimiento que aplica una operación F a todos los 
+;; valores en el rango [a, b] que cumplan el filtro filter
 ;;
 ;;<lista> := ()
 ;;        := (<int> <lista>)
-
-;;--------------------------------Punto 12--------------------------------
 
 (define filter-acum
   (lambda (a b F acum filter)
@@ -358,7 +370,7 @@ L1 x L2 -> N : Procedimiento que aplica sucesivamente una lista de funciones bin
 
 <lista-operadores> ::= ()
                    ::= (<operador-binario> <lista-operadores>)
-<lista-operandos> ::= (<número> <lista-operandos>)
+<lista-operandos>  ::= (<número> <lista-operandos>)
 
 |#
 
@@ -379,8 +391,8 @@ L1 x L2 -> N : Procedimiento que aplica sucesivamente una lista de funciones bin
 ;; S x L -> L’ : Procedimiento que retorna el camino para llegar 
 ;; a un elemento S de un arbol binario L
 ;;
-;; <arbol-binario> := (arbol-vacio) empty
-;;                 := (nodo) numero <arbol-binario> <arbol-binario>
+;; <árbol-binario> := '()
+;;                 := (<int> <árbol-binario> <árbol-binario>)
 
 (define path 
    (lambda (n BTS)
@@ -402,10 +414,11 @@ L1 x L2 -> N : Procedimiento que aplica sucesivamente una lista de funciones bin
 
 ;; count-odd-and-even :
 ;; Proposito:
-;; S x L -> L’ : Procedimiento que 
+;; S x L -> L’ : Procedimiento que cuenta la cantidad de números
+;; pares e impares en un árbol binario.
 ;;
-;; <list> := ()
-;; <list> := (<int> <list> <list>)
+;; <árbol-binario> := '()
+;;                 := (<int> <árbol-binario> <árbol-binario>)
 
 (define (count-odd-and-even arbol)
   (cond
