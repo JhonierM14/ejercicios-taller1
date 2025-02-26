@@ -76,25 +76,27 @@
 (list-set '(a b c d) 2 '(1 2))
 (list-set '(a b c d) 3 '(1 5 10))
 
-;; filter-in :
-;; Proposito:
-;; S x L -> L’ : Procedimiento que 
-;;
-;;  
-;; <List> ::= ()
-;;        ::= (<Scheme-Value> <list>)
+#|filter-in :
+Proposito:
+P x L -> L' : Procedimiento que retorna una lista con los elementos de L que cumplen el predicado P.
+<lista> ::= ()
+        ::= (<valor> <lista>)
+<predicado> ::= procedimiento que devuelve #t o #f para un <valor>
+|#
 
 (define filter-in
-  ( lambda (P L)
-    ()
+  (lambda (predicado lista)
+    (if (null? lista)  
+        '()
+        (if (predicado (car lista))  
+            (cons (car lista) (filter-in predicado (cdr lista)))  
+            (filter-in predicado (cdr lista))))))
 
-  )
-)
+;; Pruebas
+(filter-in number? ’(a 2 (1 3) b 7))
+(filter-in symbol? ’(a (b c) 17 foo))
+(filter-in string? ’(a b u "univalle" "racket" "flp" 28 90 (1 2 3)))
 
-;; Pruebas :
-(filter-in number? '(a 2 (1 3) b 7))
-(filter-in symbol? '(a (b c) 17 foo))
-(filter-in string? '(a b u "univalle" "racket" "flp" 28 90 (1 2 3)))
 
 #|
 list-index :
@@ -130,8 +132,8 @@ helper :
 ) 
 
 ;; Pruebas :
-(list-index even? '(1 3 5 6 7))  => 3
-(list-index even? '(1 3 5 7 9))  => #f
+(list-index even? '(1 3 5 6 7)) 
+(list-index even? '(1 3 5 7 9))  
 
 ;; swapper :
 ;; Proposito:
@@ -227,20 +229,35 @@ helper :
 (inversions '(1 2 3 4))
 (inversions '(3 2 1))
 
-;; up :
-;; Proposito:
-;; S x L -> L’ : Procedimiento que 
-;;
-;;
-;; <list> ::= ()
-;;        ::= (<Scheme-Value> <list>)
+#|
+up :
+Propósito:
+L -> L' : Procedimiento que remueve un par de paréntesis a cada elemento del nivel más alto de la lista.
+Si un elemento de este nivel no es una lista, se mantiene sin modificaciones.
 
-(define up
-  ( lambda (L)
-    ()
+<lista> ::= ()
+        ::= (<valor> <lista>)
+        ::= ((<valor> <lista>) <lista>)
 
-  )
-)
+apend :
+Propósito:
+L1 x L2 -> L3 : Procedimiento que concatena dos listas sin usar la función append predefinida.
+
+<lista> ::= ()
+        ::= (<valor> <lista>)
+
+Ejemplo:
+(apend '(1 2 3) '(4 5 6)) => '(1 2 3 4 5 6)
+(apend '() '(a b c)) => '(a b c)
+(apend '(x y) '()) => '(x y)
+|#
+
+(define apend
+  (lambda (L1 L2)
+    (if (null? L1)
+      L2
+    (cons (car L1) (apend (cdr L1) L2)))))
+
 
 ;; Pruebas :
 (up '((1 2) (3 4)))
@@ -289,24 +306,27 @@ helper :
 (filter-acum 1 10 - 0 odd?)
 (filter-acum 1 10 - 0 even?)
 
-;; operate :
-;; Proposito:
-;; S x L -> L’ : Procedimiento que 
-;;
-;; <operadores> := ()
-;; <operadores> := (<operador> <list>)
-;; <list> := ()
-;; <list> := (<int> <list>)
+#|
+operate :
+Propósito:
+L1 x L2 -> N : Procedimiento que aplica sucesivamente una lista de funciones binarias sobre una lista de números.
 
-(define (operate lrators lrands)
-  ( 
+<lista-operadores> ::= ()
+                   ::= (<operador-binario> <lista-operadores>)
+<lista-operandos> ::= (<número> <lista-operandos>)
 
-  )
-)
+|#
+
+(define operate
+  (lambda (lrators lrands)
+    (if (null? lrators)
+        (car lrands)
+        (operate (cdr lrators) (cons ((car lrators) (car lrands) (cadr lrands)) (cddr lrands))))))
 
 ;; Pruebas :
 (operate (list + * + - *) '(1 2 8 4 11 6))
 (operate (list *) '(4 5))
+
 
 ;; path :
 ;; Proposito:
@@ -352,21 +372,28 @@ helper :
                             ())
                         (31 () ()))))
 
-;; Operar-binarias :
-;; Proposito:
-;; S x L -> L’ : Procedimiento que 
-;;
-;; <OperacionB>::= <int>
-;;             ::= (<OperacionB> 'suma <OperacionB>)
-;;             ::= (<OperacionB> 'resta <OperacionB>)
-;;             ::= (<OperacionB> 'multiplica <OperacionB>)
 
-(define (Operar-binarias operacionB) 
-  (
+#|
+Operar-binarias :
+Propósito:
+<OperacionB> -> <int> : Procedimiento que evalúa una expresión binaria representada como una lista anidada.
 
-  )
-)
+<OperacionB> ::= <int>
+              ::= (<OperacionB> 'suma <OperacionB>)
+              ::= (<OperacionB> 'resta <OperacionB>)
+              ::= (<OperacionB> 'multiplica <OperacionB>)
+|#
 
+(define Operar-binarias
+  (lambda (exp)
+    (cond
+      [(number? exp) exp] 
+      [(list? exp) 
+       (cond
+         [(equal? (cadr exp) 'suma) (+ (Operar-binarias (car exp)) (Operar-binarias (caddr exp)))]
+         [(equal? (cadr exp) 'resta) (- (Operar-binarias (car exp)) (Operar-binarias (caddr exp)))]
+         [(equal? (cadr exp) 'multiplica) (* (Operar-binarias (car exp)) (Operar-binarias (caddr exp)))])])))
+         
 ;; Pruebas
 (Operar-binarias 4)
 (Operar-binarias '(2 suma 9) )
@@ -376,6 +403,43 @@ helper :
 (Operar-binarias '( (2 multiplica (4 suma 1) )
                       multiplica
                   ( (2 multiplica 4) resta 1 ) ) )
+
+
+#|
+pascal :
+Propósito:
+N -> L : Procedimiento que retorna la fila N del triángulo de Pascal.
+
+<N> ::= número natural
+<fila> ::= (<número> <fila>) | ()
+
+generar-fila :
+Propósito:
+L -> L' : Procedimiento que recibe una fila del triángulo de Pascal y genera la siguiente fila.
+
+<fila> ::= (<número> <fila>) | ()
+
+Ejemplo:
+(generar-fila '(1 1)) => '(1 2 1)
+(generar-fila '(1 2 1)) => '(1 3 3 1)
+|#
+
+(define generar-fila
+  (lambda (fila)
+    (if (null? (cdr fila))
+        '(1)  
+        (cons (+ (car fila) (cadr fila)) (generar-fila (cdr fila))))))
+
+(define pascal
+  (lambda (n)
+    (if (= n 1)
+        '(1) 
+        (cons 1 (generar-fila (pascal (- n 1)))))))
+;; Pruebas :
+(pascal 5)
+(pascal 1)
+
+
 
 ;; prod-scalar-matriz :
 ;; Proposito: 
@@ -401,17 +465,5 @@ helper :
 (prod-scalar-matriz '((1 1) (2 2)) '(2 3))
 (prod-scalar-matriz '((1 1) (2 2) (3 3)) '(2 3))
 
-;; pascal :
-;; Proposito:
-;; S x L -> L’ : Procedimiento que 
-;;
 
-(define (pascal N) 
-  (
 
-  )
-)
-
-;; Pruebas :
-(pascal 5)
-(pascal 1)
