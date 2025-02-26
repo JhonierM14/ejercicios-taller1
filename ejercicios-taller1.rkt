@@ -218,9 +218,18 @@ helper :
 ;;        ::= (<Scheme-Value> <list>)
 
 (define inversions
-  ( lambda (L)
-    ()
-
+  (lambda (L)
+    (define aux
+      (lambda (L l x)
+        (cond
+          [(null? L) x]
+          [(= (length l) 1) (aux (cdr L) (cdr L) x)]
+          [(> (car l) (cadr l)) (aux L (cons (car l) (cddr l)) (+ x 1))]
+          [else (aux L (cons (car l) (cddr l)) x)]
+        )
+      )
+    )
+  (aux L L 0)
   )
 )
 
