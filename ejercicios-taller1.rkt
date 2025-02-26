@@ -69,7 +69,6 @@
 (define list-set
   (lambda (L n x)
     (cond
-      [(> (+ n 1) (length L)) "Error: no se pudo reemplazar el valor x en la posicion n"]
       [(null? L) empty]
       [(= n 0) (cons x (cdr L))]
       [else (cons (car L) (list-set (cdr L) (- n 1) x))]
@@ -233,13 +232,19 @@ helper :
 ;; <list> ::= ()
 ;;        ::= (<Scheme-Value> <list>)
 
+(define longitud
+  (lambda (L x)
+    (if (null? L) x (longitud (cdr L) (+ x 1)))
+  )
+)
+
 (define inversions
   (lambda (L)
     (define aux
       (lambda (L l x)
         (cond
           [(null? L) x]
-          [(= (length l) 1) (aux (cdr L) (cdr L) x)]
+          [(= (longitud l 0) 1) (aux (cdr L) (cdr L) x)]
           [(> (car l) (cadr l)) (aux L (cons (car l) (cddr l)) (+ x 1))]
           [else (aux L (cons (car l) (cddr l)) x)]
         )
