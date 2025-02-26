@@ -4,6 +4,8 @@
 ;; Juan Pablo Robayo Maestre 202156743
 ;;-----------------------------------------
 
+;;--------------------------------Punto 1--------------------------------
+
 ;; invert :
 ;; Proposito:
 ;; S x L -> L’ : Procedimiento que intercambia la pocision
@@ -29,6 +31,8 @@
 (invert '((5 9) (10 91) (82 7) (a e) ("Hola" "Mundo")))
 (invert '(("es" "racket") ("genial" "muy") (17 29) (81 o)))
 
+;;--------------------------------Punto 2--------------------------------
+
 ;; dowm :
 ;; Proposito:
 ;; S x L -> L’ : Procedimiento que a cada elemento de una lista
@@ -52,6 +56,7 @@
 (down '((una) (buena) (idea)))
 (down '(un (objeto (mas)) complicado))
 
+;;--------------------------------Punto 3--------------------------------
 
 ;; list-set :
 ;; Proposito:
@@ -76,6 +81,8 @@
 (list-set '(a b c d) 2 '(1 2))
 (list-set '(a b c d) 3 '(1 5 10))
 
+;;--------------------------------Punto 4--------------------------------
+
 #|filter-in :
 Proposito:
 P x L -> L' : Procedimiento que retorna una lista con los elementos de L que cumplen el predicado P.
@@ -97,6 +104,7 @@ P x L -> L' : Procedimiento que retorna una lista con los elementos de L que cum
 (filter-in symbol? ’(a (b c) 17 foo))
 (filter-in string? ’(a b u "univalle" "racket" "flp" 28 90 (1 2 3)))
 
+;;--------------------------------Punto 5--------------------------------
 
 #|
 list-index :
@@ -135,6 +143,8 @@ helper :
 (list-index even? '(1 3 5 6 7)) 
 (list-index even? '(1 3 5 7 9))  
 
+;;--------------------------------Punto 6--------------------------------
+
 ;; swapper :
 ;; Proposito:
 ;; S x L -> L’ : Procedimiento que cambia cada caracter 
@@ -157,6 +167,8 @@ helper :
 (swapper 'a 'd '(a b c d))
 (swapper 'a 'd '(a d () c d))
 (swapper 'x 'y '(y y x y x y x x y))
+
+;;--------------------------------Punto 7--------------------------------
 
 ;; cartesian-product :
 ;; Proposito:
@@ -187,6 +199,8 @@ helper :
 (cartesian-product '(a b c) '(x y))
 (cartesian-product '(p q r) '(5 6 7))
 
+;;--------------------------------Punto 8--------------------------------
+
 ;; mapping :
 ;; Proposito:
 ;; S x L -> L’ : Procedimiento que aplica una operacion S
@@ -208,6 +222,8 @@ helper :
 (mapping (lambda (d) (* d 2)) (list 1 2 3) (list 2 4 6))
 (mapping (lambda (d) (* d 3)) (list 1 2 2) (list 2 4 6))
 (mapping (lambda (d) (* d 2)) (list 1 2 3) (list 3 9 12))
+
+;;--------------------------------Punto 9--------------------------------
 
 ;; inversions :
 ;; Proposito:
@@ -237,6 +253,8 @@ helper :
 (inversions '(2 3 8 6 1))
 (inversions '(1 2 3 4))
 (inversions '(3 2 1))
+
+;;--------------------------------Punto 10--------------------------------
 
 #|
 up :
@@ -279,6 +297,8 @@ Ejemplo:
 (up '((1 2) (3 4)))
 (up '((x (y)) z))
 
+;;--------------------------------Punto 11--------------------------------
+
 ;; zip :
 ;; Proposito:
 ;; S x L x F -> L' : Procedimiento que aplica una operacion S
@@ -306,6 +326,8 @@ Ejemplo:
 ;;<lista> := ()
 ;;        := (<int> <lista>)
 
+;;--------------------------------Punto 12--------------------------------
+
 (define filter-acum
   (lambda (a b F acum filter)
     (cond
@@ -321,6 +343,8 @@ Ejemplo:
 (filter-acum 1 10 + 0 even?)
 (filter-acum 1 10 - 0 odd?)
 (filter-acum 1 10 - 0 even?)
+
+;;--------------------------------Punto 13--------------------------------
 
 #|
 operate :
@@ -343,6 +367,7 @@ L1 x L2 -> N : Procedimiento que aplica sucesivamente una lista de funciones bin
 (operate (list + * + - *) '(1 2 8 4 11 6))
 (operate (list *) '(4 5))
 
+;;--------------------------------Punto 14--------------------------------
 
 ;; path :
 ;; Proposito:
@@ -368,6 +393,8 @@ L1 x L2 -> N : Procedimiento que aplica sucesivamente una lista de funciones bin
 ())
 (31 () ()))))
 
+;;--------------------------------Punto 15--------------------------------
+
 ;; count-odd-and-even :
 ;; Proposito:
 ;; S x L -> L’ : Procedimiento que 
@@ -388,6 +415,7 @@ L1 x L2 -> N : Procedimiento que aplica sucesivamente una lista de funciones bin
                             ())
                         (31 () ()))))
 
+;;--------------------------------Punto 16--------------------------------
 
 #|
 Operar-binarias :
@@ -420,6 +448,7 @@ Propósito:
                       multiplica
                   ( (2 multiplica 4) resta 1 ) ) )
 
+;;--------------------------------Punto 17--------------------------------
 
 #|
 pascal :
@@ -455,7 +484,7 @@ Ejemplo:
 (pascal 5)
 (pascal 1)
 
-
+;;--------------------------------Punto 18--------------------------------
 
 ;; prod-scalar-matriz :
 ;; Proposito: 
