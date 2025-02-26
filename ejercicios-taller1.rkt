@@ -420,18 +420,34 @@ L1 x L2 -> N : Procedimiento que aplica sucesivamente una lista de funciones bin
 ;; <árbol-binario> := '()
 ;;                 := (<int> <árbol-binario> <árbol-binario>)
 
-(define (count-odd-and-even arbol)
-  (cond
-    [(null? arbol) '(0 0)]
-    [(number? arbol) 
-     (if (even? arbol) '(1 0) '(0 1))]
-    [(pair? arbol) 
-     (sumar-listas (count-odd-and-even (car arbol)) 
-                   (count-odd-and-even (cdr arbol)))]))
+;; sumar-listas :
+;; Proposito:
+;; S x L -> L’ : Procedimiento que recibe dos listas de dos elementos 
+;; y devuelve una nueva lista con la suma de sus elementos correspondientes.
+;;
+;; <Pair> ::= ()
+;;        ::= (<int> <int>)
 
-(define (sumar-listas lista1 lista2)
-  (list (+ (car lista1) (car lista2)) 
-        (+ (cadr lista1) (cadr lista2))))
+;; Ejemplos:
+;; (sumar-listas '(3 4) '(3 4)) => (6 8)
+;; (sumar-listas '(1 0) '(0 1)) => (1 1)
+;; (sumar-listas '(11 2) '(3 4)) => (14 6)
+
+(define sumar-listas
+  (lambda (lista1 lista2)
+    (list (+ (car lista1) (car lista2)) (+ (cadr lista1) (cadr lista2)))
+  )
+)
+
+(define count-odd-and-even
+  (lambda (arbol)
+    (cond
+      [(null? arbol) '(0 0)]
+      [(number? arbol) (if (even? arbol) '(1 0) '(0 1))]
+      [(pair? arbol) (sumar-listas (count-odd-and-even (car arbol)) (count-odd-and-even (cdr arbol)))]
+    )
+  )
+)
 
 ;; Pruebas :
 (count-odd-and-even '(14 (7 () (12 () ()))
