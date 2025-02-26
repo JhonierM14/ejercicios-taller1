@@ -179,11 +179,11 @@ helper :
 ;; <list> ::= ()
 ;;        ::= (<Scheme-Value> <list>)
 
-(define aux
+(define cartesian-product-by-element
   (lambda (E L2)
     (if (null? L2)
         '()
-        (cons (list E (car L2)) (aux E (cdr L2)))
+        (cons (list E (car L2)) (cartesian-product-by-element E (cdr L2)))
         )))
 
 (define cartesian-product
@@ -192,7 +192,7 @@ helper :
         '()
         (if (null? L2)
             '()
-            ( cons (aux (car L1) L2) (cartesian-product (cdr L1) L2) )
+            ( cons (cartesian-product-by-element (car L1) L2) (cartesian-product (cdr L1) L2) )
      ))))
 
 ;; Pruebas
@@ -400,14 +400,20 @@ L1 x L2 -> N : Procedimiento que aplica sucesivamente una lista de funciones bin
 ;; S x L -> L’ : Procedimiento que 
 ;;
 ;; <list> := ()
-;; <list> := (<int> <list>)
-;; <list> := (<list> <list>)
+;; <list> := (<int> <list> <list>)
 
 (define (count-odd-and-even arbol)
-  (
+  (cond
+    [(null? arbol) '(0 0)]
+    [(number? arbol) 
+     (if (even? arbol) '(1 0) '(0 1))]
+    [(pair? arbol) 
+     (sumar-listas (count-odd-and-even (car arbol)) 
+                   (count-odd-and-even (cdr arbol)))]))
 
-  )
-)
+(define (sumar-listas lista1 lista2)
+  (list (+ (car lista1) (car lista2)) 
+        (+ (cadr lista1) (cadr lista2))))
 
 ;; Pruebas :
 (count-odd-and-even '(14 (7 () (12 () ()))
@@ -450,6 +456,32 @@ Propósito:
 
 ;;--------------------------------Punto 17--------------------------------
 
+;; prod-scalar-matriz :
+;; Proposito: 
+;; S x L -> S' : Procedimiento que multiplica una matriz S 
+;; por un vector L
+;; <lista> := ()
+;;        := (<int> <lista>)
+
+(define multiplicar-fila
+  (lambda (fila vec)
+    (if (null? fila) 
+    '()
+     (cons (* (car fila) (car vec) ) (multiplicar-fila (cdr fila) (cdr vec) ))
+)))
+
+ (define (prod-scalar-matriz mat vec)
+   (if (null? mat)
+   '()
+    (cons (multiplicar-fila (car mat) vec) (prod-scalar-matriz (cdr mat) vec))
+))
+
+;; Pruebas :
+(prod-scalar-matriz '((1 1) (2 2)) '(2 3))
+(prod-scalar-matriz '((1 1) (2 2) (3 3)) '(2 3))
+
+;;--------------------------------Punto 18--------------------------------
+
 #|
 pascal :
 Propósito:
@@ -483,32 +515,3 @@ Ejemplo:
 ;; Pruebas :
 (pascal 5)
 (pascal 1)
-
-;;--------------------------------Punto 18--------------------------------
-
-;; prod-scalar-matriz :
-;; Proposito: 
-;; S x L -> S' : Procedimiento que multiplica una matriz S 
-;; por un vector L
-;; <lista> := ()
-;;        := (<int> <lista>)
-
-(define aux
-  (lambda (fila vec)
-    (if (null? fila) 
-    '()
-     (cons (* (car fila) (car vec) ) (aux (cdr fila) (cdr vec) ))
-)))
-
- (define (prod-scalar-matriz mat vec)
-   (if (null? mat)
-   '()
-    (cons (aux (car mat) vec) (prod-scalar-matriz (cdr mat) vec))
-))
-
-;; Pruebas :
-(prod-scalar-matriz '((1 1) (2 2)) '(2 3))
-(prod-scalar-matriz '((1 1) (2 2) (3 3)) '(2 3))
-
-
-
