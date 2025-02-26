@@ -258,6 +258,13 @@ Ejemplo:
       L2
     (cons (car L1) (apend (cdr L1) L2)))))
 
+(define up
+  (lambda (L)
+    (cond
+      [(null? L) '()] 
+      [(list? (car L)) (apend (car L) (up (cdr L)))] 
+      [else (cons (car L) (up (cdr L)))])))
+
 
 ;; Pruebas :
 (up '((1 2) (3 4)))
