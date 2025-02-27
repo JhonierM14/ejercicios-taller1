@@ -4,28 +4,25 @@
 ;; Juan Pablo Robayo Maestre 202156743
 ;;-----------------------------------------
 
+#lang eopl
+
 ;;--------------------------------Punto 1--------------------------------
 
 ;; invert :
 ;; Proposito:
-;; S x L -> L’ : Procedimiento que intercambia la pocision
-;; de los elementos dentro de un tupla
+;; L -> L' : Procedimiento que invierte cada par ordenado 
+;; x, y perteneciente a una lista L
 ;;  
 ;; <List> ::= ()
 ;;        ::= (<Pair> <list>)
-;; <Pair> ::= ()
-;;        ::= (<Scheme-Value> <<Scheme-Value>)
-
-#lang eopl
+;; <Pair> ::= (<Scheme-Value> <Scheme-Value>)
 
 (define invert
   (lambda (L)
     (if (null? L)
         '()
-        (if (pair? (car L))
-            (cons (list (car(cdr (car L))) (car(car L))) (invert(cdr L)) )
-            '()
-            ))))
+        (cons (list (car(cdr (car L))) (car(car L))) (invert(cdr L)) )
+        )))
 
 ;; Pruebas 
 (invert '((a 1) (a 2) (b 1) (b 2)))
@@ -36,12 +33,13 @@
 
 ;; dowm :
 ;; Proposito:
-;; S x L -> L’ : Procedimiento que a cada elemento de una lista
+;; L -> L' : Procedimiento que a cada elemento de una lista L
 ;; lo inserta en una lista y lo ingresa nuevamente en la pocision
 ;; en la que estaba el elemento
 ;;  
 ;; <List> ::= ()
-;;        ::= (<Scheme-Value> <list>)
+;;        ::= (<elemento> <List>)
+;; <elemento> ::= <List> | <Scheme-Value>
 
 (define down
   (lambda (L)
@@ -61,11 +59,11 @@
 
 ;; list-set :
 ;; Proposito:
-;; S x L -> L’ : Procedimiento que inserta en la pocision n
-;; de una lista un elemento x
+;; L x n x a -> L' : Procedimiento que inserta en la pocision n
+;; de una lista L un elemento a
 ;;  
 ;; <List> ::= ()
-;;        ::= (<Scheme-Value> <list>)
+;;        ::= (<Scheme-Value> <List>)
 
 (define list-set
   (lambda (L n x)
@@ -85,10 +83,12 @@
 
 #|filter-in :
 Proposito:
-P x L -> L' : Procedimiento que retorna una lista con los elementos de L que cumplen el predicado P.
-<lista> ::= ()
-        ::= (<valor> <lista>)
-<predicado> ::= procedimiento que devuelve #t o #f para un <valor>
+P x L -> lista : Procedimiento que a cada elemento de una 
+lista L le verifica si cumple un predicado P
+
+<List> ::= ()
+        ::= (<elemento> <List>)
+<elemento> ::= <Scheme-Value> | <List>
 |#
 
 (define filter-in
@@ -109,22 +109,22 @@ P x L -> L' : Procedimiento que retorna una lista con los elementos de L que cum
 #|
 list-index :
 Proposito:
-P x L -> N / #f : Procedimiento que retorna el índice del primer elemento de L que satisface P.
+P x L -> int / #f : Procedimiento que retorna el índice del 
+primer elemento de L que satisface P. 
 Si ningún elemento satisface P, retorna #f.
-<lista> ::= ()
-        ::= (<valor> <lista>)
-<predicado> ::= procedimiento que devuelve #t o #f para un <valor>
-<indice> ::= número natural que representa la posición en la lista
 
 helper :
  Proposito:
- L x N -> N / #f : Procedimiento auxiliar que recorre la lista con un índice acumulador.
- Retorna el índice del primer elemento que satisface P, o #f si no hay coincidencias.
- <lista> ::= ()
-         ::= (<valor> <lista>)
-<indice> ::= número natural que representa la posición actual en la lista
- Ejemplo:
- (helper '(6 7 8) 2)  => 2
+ L x int -> int / #f : Procedimiento auxiliar que recorre la lista con 
+ un índice acumulador. 
+
+ Retorna el índice del primer elemento que satisface P, o #f si no 
+ hay coincidencias.
+
+<List> ::= ()
+        ::= (<elemento> <List>)
+<elemento> ::= <Scheme-Value> | <List>
+
 |#
 
 (define list-index
@@ -147,12 +147,12 @@ helper :
 
 ;; swapper :
 ;; Proposito:
-;; S x L -> L’ : Procedimiento que cambia cada caracter 
+;; E1 x E2 x L -> L’ : Procedimiento que cambia cada caracter 
 ;; E1 por un caracter E2 de una lista y viceversa
 ;;
-;;<lista> := ()
-;;            := (<char> <lista>)
-;;            := ((<char> <lista>) <lista>)
+;; <List> := ()
+;;            := (<elemento> <List>)
+;; <elemento> := <char> | <Scheme-Value> | ()
 
 (define swapper 
   (lambda (E1 E2 L)
@@ -171,13 +171,20 @@ helper :
 ;;--------------------------------Punto 7--------------------------------
 
 ;; cartesian-product :
-;; Proposito:
-;; S x L -> P : Procedimiento que retorna el producto
-;; cartesiano de una lista S y una lista L haciendo uso
-;; de una funcion auxiliar
 ;;
-;; <list> ::= ()
-;;        ::= (<Scheme-Value> <list>)
+;; Proposito:
+;; L1 x L2 -> L1' : Procedimiento que retorna el producto
+;; cartesiano de una lista L1 y una lista L2
+;; haciendo uso de una funcion auxiliar
+;;
+;; cartesian-product-by-element :
+;; 
+;; Proposito:
+;; E x L1 -> L1' : Procedimiento que retorna el producto
+;; cartesiano de una lista E y una lista L1
+;;
+;; <List> ::= ()
+;;        ::= (<int> <List>)
 
 (define cartesian-product-by-element
   (lambda (E L2)
@@ -206,8 +213,8 @@ helper :
 ;; S x L -> L’ : Procedimiento que aplica una operacion S
 ;; a cada elemento  de L.
 ;;
-;; <list> ::= ()
-;;        ::= (<Scheme-Value> <list>)
+;; <List> ::= ()
+;;        ::= (<int> <List>)
 
 (define mapping
   ( lambda (F L1 L2)
@@ -227,18 +234,17 @@ helper :
 
 ;; inversions :
 ;; Proposito:
-;; S x L -> L’ : Procedimiento que recibe una lista y cuenta la cantidad 
-;; de parejas (i, j) que cumplen que i > j
+;; L -> int : Procedimiento que cuenta la cantidad 
+;; de veces que un elemento de pocision i es mayor 
+;; que el resto de la lista L
 ;;
-;; <list> ::= ()
-;;        ::= (<int> <list>)
-
 ;; longitud :
 ;; Proposito:
-;; L -> N : Procedimiento que cuenta la cantidad de elementos de una lista sin usar length
+;; L x a -> int : Procedimiento que cuenta la cantidad de 
+;; elementos de una lista sin usar length
 ;;
 ;; <list> ::= ()
-;;        ::= (<Scheme-Value> <list>)
+;;        ::= (<int> <List>)
 
 ;; Ejemplos:
 ;; (longitud '(1 2 4 5 6)) => 5
@@ -277,19 +283,20 @@ helper :
 #|
 up :
 Propósito:
-L -> L' : Procedimiento que remueve un par de paréntesis a cada elemento del nivel más alto de la lista.
-Si un elemento de este nivel no es una lista, se mantiene sin modificaciones.
+L -> L' : Procedimiento que remueve un par de paréntesis 
+a cada elemento del nivel más alto de la lista.
 
-<lista> ::= ()
-        ::= (<valor> <lista>)
-        ::= ((<valor> <lista>) <lista>)
+Si un elemento de este nivel no es una lista, se mantiene 
+sin modificaciones.
 
 apend :
 Propósito:
-L1 x L2 -> L3 : Procedimiento que concatena dos listas sin usar la función append predefinida.
+L1 x L2 -> L : Procedimiento que concatena dos listas sin 
+usar la función append predefinida.
 
-<lista> ::= ()
-        ::= (<valor> <lista>)
+<List> ::= ()
+        ::= (<List> <List>)
+        ::= (<Scheme-Value> <List>)
 
 Ejemplo:
 (apend '(1 2 3) '(4 5 6)) => '(1 2 3 4 5 6)
@@ -310,7 +317,6 @@ Ejemplo:
       [(list? (car L)) (apend (car L) (up (cdr L)))] 
       [else (cons (car L) (up (cdr L)))])))
 
-
 ;; Pruebas :
 (up '((1 2) (3 4)))
 (up '((x (y)) z))
@@ -322,8 +328,8 @@ Ejemplo:
 ;; S x L x F -> L' : Procedimiento que aplica una operacion S
 ;; a cada elemento de pocision i de una lista L y F
 ;;
-;; <lista> := ()
-;;         := (<int> <lista>)
+;; <List> ::= ()
+;;        ::= (<int> <lista>)
 
 (define zip
    (lambda (F L1 L2 )
@@ -340,11 +346,13 @@ Ejemplo:
 
 ;; filter-acum :
 ;; Proposito:
-;; S x L -> L’ : Procedimiento que aplica una operación F a todos los 
-;; valores en el rango [a, b] que cumplan el filtro filter
+;; intervalo x F x n x funcion -> int : Procedimiento que 
+;; aplica una operación F a todos los valores de un intervalo  
+;; [a, b] y que a su vez cumplen el predicado de la funcion filter
+;; guardando el resultado en un valor n
 ;;
-;;<lista> := ()
-;;        := (<int> <lista>)
+;;<lista> ::= (<int> <lista>)
+;;        
 
 (define filter-acum
   (lambda (a b F acum filter)
