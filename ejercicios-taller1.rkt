@@ -19,10 +19,9 @@
 
 (define invert
   (lambda (L)
-    (if (null? L)
-        '()
-        (cons (list (car(cdr (car L))) (car(car L))) (invert(cdr L)) )
-        )))
+    (if (null? L) '() (cons (list (car (cdr (car L))) (car (car L))) (invert(cdr L))))
+  )
+)
 
 ;; Pruebas 
 (invert '((a 1) (a 2) (b 1) (b 2)))
@@ -63,7 +62,8 @@
 ;; de una lista L un elemento a
 ;;  
 ;; <List> ::= ()
-;;        ::= (<Scheme-Value> <List>)
+;;        ::= (<elemento> <List>)
+;; <elemento> ::= <List> | <Scheme-Value>
 
 (define list-set
   (lambda (L n x)
@@ -78,6 +78,7 @@
 ;; Pruebas
 (list-set '(a b c d) 2 '(1 2))
 (list-set '(a b c d) 3 '(1 5 10))
+(list-set '((a b) b c d) 1 '(b a))
 
 ;;--------------------------------Punto 4--------------------------------
 
@@ -122,7 +123,7 @@ helper :
  hay coincidencias.
 
 <List> ::= ()
-        ::= (<elemento> <List>)
+       ::= (<elemento> <List>)
 <elemento> ::= <Scheme-Value> | <List>
 
 |#
@@ -142,6 +143,7 @@ helper :
 ;; Pruebas :
 (list-index even? '(1 3 5 6 7)) 
 (list-index even? '(1 3 5 7 9))  
+(list-index odd? '(2 4 6 7 8))
 
 ;;--------------------------------Punto 6--------------------------------
 
@@ -171,20 +173,18 @@ helper :
 ;;--------------------------------Punto 7--------------------------------
 
 ;; cartesian-product :
-;;
 ;; Proposito:
 ;; L1 x L2 -> L1' : Procedimiento que retorna el producto
 ;; cartesiano de una lista L1 y una lista L2
 ;; haciendo uso de una funcion auxiliar
 ;;
 ;; cartesian-product-by-element :
-;; 
 ;; Proposito:
 ;; E x L1 -> L1' : Procedimiento que retorna el producto
 ;; cartesiano de una lista E y una lista L1
 ;;
 ;; <List> ::= ()
-;;        ::= (<int> <List>)
+;;        ::= (<Scheme-Value> <List>)
 
 (define cartesian-product-by-element
   (lambda (E L2)
@@ -205,6 +205,7 @@ helper :
 ;; Pruebas
 (cartesian-product '(a b c) '(x y))
 (cartesian-product '(p q r) '(5 6 7))
+(cartesian-product '("Univalle") '("es" "genial"))
 
 ;;--------------------------------Punto 8--------------------------------
 
@@ -252,8 +253,8 @@ helper :
 ;; (longitud '(1 11 9)) => 3
 
 (define longitud
-  (lambda (L x)
-    (if (null? L) x (longitud (cdr L) (+ x 1)))
+  (lambda (L a)
+    (if (null? L) a (longitud (cdr L) (+ a 1)))
   )
 )
 
@@ -351,8 +352,8 @@ Ejemplo:
 ;; [a, b] y que a su vez cumplen el predicado de la funcion filter
 ;; guardando el resultado en un valor n
 ;;
-;;<lista> ::= (<int> <lista>)
-;;        
+;; <list> ::= ()
+;; <list> ::= (<int> <list>)
 
 (define filter-acum
   (lambda (a b F acum filter)
@@ -375,7 +376,8 @@ Ejemplo:
 #|
 operate :
 Propósito:
-L1 x L2 -> N : Procedimiento que aplica sucesivamente una lista de funciones binarias sobre una lista de números.
+L1 x L2 -> N : Procedimiento que aplica sucesivamente una lista
+de funciones binarias sobre una lista de números.
 
 <lista-operadores> ::= ()
                    ::= (<operador-binario> <lista-operadores>)
@@ -423,7 +425,7 @@ L1 x L2 -> N : Procedimiento que aplica sucesivamente una lista de funciones bin
 
 ;; count-odd-and-even :
 ;; Proposito:
-;; S x L -> L’ : Procedimiento que cuenta la cantidad de números
+;; L -> pair : Procedimiento que cuenta la cantidad de números
 ;; pares e impares en un árbol binario.
 ;;
 ;; <árbol-binario> := '()
