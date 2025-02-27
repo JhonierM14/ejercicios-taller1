@@ -16,6 +16,7 @@
 ;; <Pair> ::= ()
 ;;        ::= (<Scheme-Value> <<Scheme-Value>)
 
+#lang eopl
 
 (define invert
   (lambda (L)
