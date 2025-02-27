@@ -88,7 +88,7 @@ P x L -> lista : Procedimiento que a cada elemento de una
 lista L le verifica si cumple un predicado P
 
 <List> ::= ()
-        ::= (<elemento> <List>)
+       ::= (<elemento> <List>)
 <elemento> ::= <Scheme-Value> | <List>
 |#
 
@@ -153,7 +153,7 @@ helper :
 ;; E1 por un caracter E2 de una lista y viceversa
 ;;
 ;; <List> := ()
-;;            := (<elemento> <List>)
+;;        := (<elemento> <List>)
 ;; <elemento> := <char> | <Scheme-Value> | ()
 
 (define swapper 
@@ -296,8 +296,8 @@ L1 x L2 -> L : Procedimiento que concatena dos listas sin
 usar la función append predefinida.
 
 <List> ::= ()
-        ::= (<List> <List>)
-        ::= (<Scheme-Value> <List>)
+       ::= (<List> <List>)
+       ::= (<Scheme-Value> <List>)
 
 Ejemplo:
 (apend '(1 2 3) '(4 5 6)) => '(1 2 3 4 5 6)
@@ -321,6 +321,7 @@ Ejemplo:
 ;; Pruebas :
 (up '((1 2) (3 4)))
 (up '((x (y)) z))
+(up '((a (b)) (c)))
 
 ;;--------------------------------Punto 11--------------------------------
 
@@ -342,6 +343,7 @@ Ejemplo:
 ;; Pruebas :
 (zip + '(1 4) '(6 2))
 (zip * '(11 5 6) '(10 9 8))
+(zip - '(3 5 11) '(1 2 8))
 
 ;;--------------------------------Punto 12--------------------------------
 
@@ -394,6 +396,7 @@ de funciones binarias sobre una lista de números.
 ;; Pruebas :
 (operate (list + * + - *) '(1 2 8 4 11 6))
 (operate (list *) '(4 5))
+(operate (list * - +) '(3 10 4 6))
 
 ;;--------------------------------Punto 14--------------------------------
 
@@ -402,8 +405,8 @@ de funciones binarias sobre una lista de números.
 ;; S x L -> L’ : Procedimiento que retorna el camino para llegar 
 ;; a un elemento S de un arbol binario L
 ;;
-;; <árbol-binario> := '()
-;;                 := (<int> <árbol-binario> <árbol-binario>)
+;; <árbol-binario> ::= '()
+;;                 ::= (<int> <árbol-binario> <árbol-binario>)
 
 (define path 
    (lambda (n BTS)
@@ -421,6 +424,11 @@ de funciones binarias sobre una lista de números.
 ())
 (31 () ()))))
 
+(path 31 '(14 (7 () (12 () ()))
+(26 (20 (17 () ())
+())
+(31 () ()))))
+
 ;;--------------------------------Punto 15--------------------------------
 
 ;; count-odd-and-even :
@@ -428,8 +436,8 @@ de funciones binarias sobre una lista de números.
 ;; L -> pair : Procedimiento que cuenta la cantidad de números
 ;; pares e impares en un árbol binario.
 ;;
-;; <árbol-binario> := '()
-;;                 := (<int> <árbol-binario> <árbol-binario>)
+;; <árbol-binario> ::= '()
+;;                 ::= (<int> <árbol-binario> <árbol-binario>)
 
 ;; sumar-listas :
 ;; Proposito:
@@ -466,6 +474,9 @@ de funciones binarias sobre una lista de números.
                             ())
                         (31 () ()))))
 
+(count-odd-and-even '(2 (3 () ())
+                      (19 (13 () ()) ()))
+
 ;;--------------------------------Punto 16--------------------------------
 
 #|
@@ -474,9 +485,9 @@ Propósito:
 <OperacionB> -> <int> : Procedimiento que evalúa una expresión binaria representada como una lista anidada.
 
 <OperacionB> ::= <int>
-              ::= (<OperacionB> 'suma <OperacionB>)
-              ::= (<OperacionB> 'resta <OperacionB>)
-              ::= (<OperacionB> 'multiplica <OperacionB>)
+             ::= (<OperacionB> 'suma <OperacionB>)
+             ::= (<OperacionB> 'resta <OperacionB>)
+             ::= (<OperacionB> 'multiplica <OperacionB>)
 |#
 
 (define Operar-binarias
@@ -505,8 +516,8 @@ Propósito:
 ;; Proposito: 
 ;; S x L -> S' : Procedimiento que multiplica una matriz S 
 ;; por un vector L
-;; <lista> := ()
-;;        := (<int> <lista>)
+;; <lista> ::= ()
+;;         ::= (<int> <lista>)
 
 (define multiplicar-fila
   (lambda (fila vec)
@@ -524,6 +535,7 @@ Propósito:
 ;; Pruebas :
 (prod-scalar-matriz '((1 1) (2 2)) '(2 3))
 (prod-scalar-matriz '((1 1) (2 2) (3 3)) '(2 3))
+(prod-scalar-matriz '((4 4) (2 2) (3 3)) '(1 2))
 
 ;;--------------------------------Punto 18--------------------------------
 
@@ -557,6 +569,8 @@ Ejemplo:
     (if (= n 1)
         '(1) 
         (cons 1 (generar-fila (pascal (- n 1)))))))
+
 ;; Pruebas :
 (pascal 5)
+(pascal 3)
 (pascal 1)
