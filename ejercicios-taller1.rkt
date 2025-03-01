@@ -152,9 +152,9 @@ helper :
 ;; E1 x E2 x L -> L’ : Procedimiento que cambia cada caracter 
 ;; E1 por un caracter E2 de una lista y viceversa
 ;;
-;; <List> := ()
-;;        := (<elemento> <List>)
-;; <elemento> := <char> | <Scheme-Value> | ()
+;; <List> ::= ()
+;;        ::= (<elemento> <List>)
+;; <elemento> ::= <Scheme-Value> | <list>
 
 (define swapper 
   (lambda (E1 E2 L)
@@ -181,10 +181,26 @@ helper :
 ;; cartesian-product-by-element :
 ;; Proposito:
 ;; E x L1 -> L1' : Procedimiento que retorna el producto
-;; cartesiano de una lista E y una lista L1
+;; cartesiano de un elemento E y una lista L1
 ;;
 ;; <List> ::= ()
 ;;        ::= (<Scheme-Value> <List>)
+;;
+;; apend :
+;; Propósito:
+;; L1 x L2 -> L : Procedimiento que concatena dos listas sin 
+;; usar la función append predefinida.
+;;
+;; Ejemplo:
+;; (apend '(1 2 3) '(4 5 6)) => '(1 2 3 4 5 6)
+;; (apend '() '(a b c)) => '(a b c)
+;; (apend '(x y) '()) => '(x y)
+
+(define apend
+  (lambda (L1 L2)
+    (if (null? L1)
+      L2
+    (cons (car L1) (apend (cdr L1) L2)))))
 
 (define cartesian-product-by-element
   (lambda (E L2)
@@ -290,26 +306,10 @@ a cada elemento del nivel más alto de la lista.
 Si un elemento de este nivel no es una lista, se mantiene 
 sin modificaciones.
 
-apend :
-Propósito:
-L1 x L2 -> L : Procedimiento que concatena dos listas sin 
-usar la función append predefinida.
-
 <List> ::= ()
        ::= (<List> <List>)
        ::= (<Scheme-Value> <List>)
-
-Ejemplo:
-(apend '(1 2 3) '(4 5 6)) => '(1 2 3 4 5 6)
-(apend '() '(a b c)) => '(a b c)
-(apend '(x y) '()) => '(x y)
 |#
-
-(define apend
-  (lambda (L1 L2)
-    (if (null? L1)
-      L2
-    (cons (car L1) (apend (cdr L1) L2)))))
 
 (define up
   (lambda (L)
