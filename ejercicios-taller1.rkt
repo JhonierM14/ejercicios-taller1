@@ -215,7 +215,7 @@ helper :
         '()
         (if (null? L2)
             '()
-            ( cons (cartesian-product-by-element (car L1) L2) (cartesian-product (cdr L1) L2) )
+            ( apend (cartesian-product-by-element (car L1) L2) (cartesian-product (cdr L1) L2) )
      ))))
 
 ;; Pruebas
